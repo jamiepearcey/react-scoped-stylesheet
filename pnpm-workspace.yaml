@@ -1,0 +1,12 @@
+packages:
+  - 'tests/e2e/*'
+  - 'packages/*'
+
+
+devDependencies:
+  - 'vite' 
+  - 'webpack'
+  - 'typescript'
+  - 'eslint'
+  - 'playwright'
+  - 'scheduler'
