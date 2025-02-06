@@ -1,11 +1,12 @@
 # Playwright
-/test-results/
-/playwright-report/
-/playwright/.cache/ 
-node_modules
-node_modules
-*/dist/*
-/coverage/
-/test-results/
-/playwright-report/
-/playwright/.cache/ 
+test-results/
+playwright-report/
+playwright/.cache/ 
+.turbo/
+node_modules/
+dist/
+coverage/
+playwright/.cache/
+.DS_Store
+playwright-report/
+test-results/

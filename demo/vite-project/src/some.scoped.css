@@ -1,12 +1,5 @@
-.scoped {
+.some-locally-scoped-class {
+  font-weight: bold;
   color: red;
-}
-
-.app {
-  background: #f0f0f0;
-  padding: 20px;
-}
-
-h1 {
-  color: blue;
+  background-color: blue;
 }

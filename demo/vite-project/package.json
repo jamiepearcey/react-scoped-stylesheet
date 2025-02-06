@@ -9,19 +9,21 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
   },
   "dependencies": {
     "@playwright/test": "^1.50.1",
     "@react-scoped-stylesheet/core": "workspace:*",
+    "css-loader": "^7.1.2",
+    "postcss-loader": "^8.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "scheduler": "^0.25.0",
-    "css-loader": "^7.1.2",
-    "postcss-loader": "^8.1.1",
     "style-loader": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^20.17.16",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^7.18.0",

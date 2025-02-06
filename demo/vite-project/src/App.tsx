@@ -1,10 +1,12 @@
 import './App.css'
-import {scopeClass} from './some.scoped.css'
+import SomeComponent from "./some-component";
 
 export default function App() {
   return (
-    <div className={scopeClass}>
-      <h1>Hello Scoped Styles</h1>
+    <div>
+    <h1>Welcome to Next.js</h1>
+    <p>With scoped styles!</p>
+    <SomeComponent />
     </div>
   )
 }
