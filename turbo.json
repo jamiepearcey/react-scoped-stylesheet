@@ -15,10 +15,6 @@
     },
     "test:e2e": {
       "dependsOn": ["build"]
-    },
-    "//#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
     }
   },
   "globalDependencies": ["package.json", "pnpm-lock.yaml", "turbo.json"]
