@@ -7,13 +7,19 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build"]
     },
     "test": {
       "dependsOn": ["build"]
     },
     "test:e2e": {
       "dependsOn": ["build"]
+    },
+    "//#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
     }
-  }
+  },
+  "globalDependencies": ["package.json", "pnpm-lock.yaml", "turbo.json"]
 } 
