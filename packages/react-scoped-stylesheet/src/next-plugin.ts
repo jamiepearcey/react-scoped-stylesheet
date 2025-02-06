@@ -5,7 +5,8 @@ import type { ConfigurationFn } from "./utils";
 import { createScopedStyles } from "./postcss-scoped-styles";
 
 export function nextScopedStylesPlugin(
-  config: Configuration
+  config: Configuration,
+  options: { webpackLoaderPath?: string } = {}
 ): Configuration {
   const fns: ConfigurationFn[] = [];
 
@@ -23,7 +24,7 @@ export function nextScopedStylesPlugin(
           },
           use: [
             {
-              loader: require.resolve('./webpack-loader'),
+              loader: options.webpackLoaderPath || require.resolve('./webpack-loader'),
             },
             {
               loader: require.resolve('style-loader'),
