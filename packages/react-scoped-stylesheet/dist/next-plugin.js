@@ -4,7 +4,7 @@ exports.nextScopedStylesPlugin = nextScopedStylesPlugin;
 const utils_1 = require("./utils");
 const utils_2 = require("./utils");
 const postcss_scoped_styles_1 = require("./postcss-scoped-styles");
-function nextScopedStylesPlugin(config) {
+function nextScopedStylesPlugin(config, options = {}) {
     const fns = [];
     // Add our scoped styles loader
     fns.push((0, utils_1.unshiftLoader)({
@@ -19,7 +19,7 @@ function nextScopedStylesPlugin(config) {
                 },
                 use: [
                     {
-                        loader: require.resolve('./webpack-loader'),
+                        loader: options.webpackLoaderPath || require.resolve('./webpack-loader'),
                     },
                     {
                         loader: require.resolve('style-loader'),

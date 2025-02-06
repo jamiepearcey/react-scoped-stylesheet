@@ -2,13 +2,13 @@
   "name": "react-scoped-stylesheet-demo-next-project",
   "version": "0.1.0",
   "author": "Jamie Pearcey",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@react-scoped-stylesheet/core": "workspace:*",

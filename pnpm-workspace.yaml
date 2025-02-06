@@ -1,7 +1,6 @@
 packages:
-  - 'tests/e2e/*'
+  - 'demo/*'
   - 'packages/*'
-
 
 devDependencies:
   - 'vite' 
