@@ -49,6 +49,8 @@ pnpm add react-scoped-stylesheet
 
 ## Usage
 
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/vitejs-vite-pwgg39gp?file=src%2FApp.tsx)
+
 ### Basic Usage
 
 Import the scopeClass from your scoped stylesheet and apply it to your component:
