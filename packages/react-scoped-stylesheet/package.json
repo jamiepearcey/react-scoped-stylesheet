@@ -47,6 +47,6 @@
     "test:watch": "vitest watch"
   },
   "peerDependencies": {
-    "vite": "^5.1.4"
+     "vite": ">=5.0.0 <7.0.0"
   }
 }
