@@ -17,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "@react-scoped-stylesheet/core/global.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "react-scoped-stylesheet/global.d.ts"],
   "exclude": ["node_modules"]
 }

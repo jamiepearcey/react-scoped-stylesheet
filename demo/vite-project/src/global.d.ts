@@ -1,1 +1,1 @@
-/// <reference types="@react-scoped-stylesheet/core/global" />
+/// <reference types="react-scoped-stylesheet/global" />

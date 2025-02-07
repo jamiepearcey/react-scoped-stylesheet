@@ -12,6 +12,6 @@
     "test:e2e": "turbo run test:e2e --concurrency=1"
   },
   "devDependencies": {
-    "turbo": "^1.12.4"
+    "turbo": "^1.13.4"
   }
-} 
+}

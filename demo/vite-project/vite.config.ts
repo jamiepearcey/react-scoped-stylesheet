@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { viteScopedStylesPlugin } from '@react-scoped-stylesheet/core'
+import { viteScopedStylesPlugin } from 'react-scoped-stylesheet'
 
 // https://vitejs.dev/config/
 export default defineConfig({

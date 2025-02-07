@@ -1,11 +1,3 @@
 packages:
   - 'demo/*'
   - 'packages/*'
-
-devDependencies:
-  - 'vite' 
-  - 'webpack'
-  - 'typescript'
-  - 'eslint'
-  - 'playwright'
-  - 'scheduler'

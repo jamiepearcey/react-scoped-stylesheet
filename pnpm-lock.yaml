@@ -9,14 +9,11 @@ importers:
   .:
     devDependencies:
       turbo:
-        specifier: ^1.12.4
+        specifier: ^1.13.4
         version: 1.13.4
 
   demo/next-project:
     dependencies:
-      '@react-scoped-stylesheet/core':
-        specifier: workspace:*
-        version: link:../../packages/react-scoped-stylesheet
       next:
         specifier: 15.1.6
         version: 15.1.6(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.83.4)
@@ -26,6 +23,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-scoped-stylesheet:
+        specifier: workspace:*
+        version: link:../../packages/react-scoped-stylesheet
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.2.0
@@ -60,9 +60,6 @@ importers:
       '@playwright/test':
         specifier: ^1.50.1
         version: 1.50.1
-      '@react-scoped-stylesheet/core':
-        specifier: workspace:*
-        version: link:../../packages/react-scoped-stylesheet
       css-loader:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.97.1)
@@ -75,6 +72,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      react-scoped-stylesheet:
+        specifier: workspace:*
+        version: link:../../packages/react-scoped-stylesheet
       scheduler:
         specifier: ^0.25.0
         version: 0.25.0

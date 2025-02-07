@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { nextScopedStylesPlugin } from "@react-scoped-stylesheet/core";
+import { nextScopedStylesPlugin } from "react-scoped-stylesheet";
 
 const nextConfig: NextConfig = {
   webpack: (config, options) => {

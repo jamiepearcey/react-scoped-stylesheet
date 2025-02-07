@@ -1,5 +1,5 @@
 {
-  "name": "@react-scoped-stylesheet/core",
+  "name": "react-scoped-stylesheet",
   "version": "1.0.0",
   "description": "Scoped CSS support for React with minimal setup",
   "author": "Jamie Pearcey",
