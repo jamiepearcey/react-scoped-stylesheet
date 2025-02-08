@@ -1,16 +1,6 @@
 # React Scoped Stylesheet
 
-**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but with the added benefits of natural CSS cascade and flexible style sharing. 
-
-## Overview
-
-In Vue, scoped styles just work, allowing you to encapsulate CSS without sacrificing the natural cascade of styles. React Scoped Stylesheet leverages this concept by processing your CSS at build time, adding a unique scope identifier to each stylesheet. This identifier is then returned for you to pass to one or more components as needed—enabling both component isolation and selective cascading.
-
-> **Why?**  
-> CSS Modules isolate styles completely, eliminating the cascade that often makes CSS so powerful. With React Scoped Stylesheet, you get the best of both worlds:
-> - **Isolation:** Prevent style leakage to the global scope.
-> - **Cascade:** Allow natural CSS inheritance within your component tree.
-> - **Flexibility:** Share a scoped style across multiple components, giving you complete control over your styling architecture.
+**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level, and you can share styles across components by passing the scope identifier. This avoids the need to manually scope every classname to the selector block.
 
 ## Key Features
 
@@ -115,10 +105,10 @@ module.exports = {
 
 ## How It Works
 
-React Scoped Stylesheet processes your CSS at build time by appending a unique scope (or class ID) to your styles. This scope is then exported as scopeClass, allowing you to assign these styles to any component you choose. The result is a system that:
+React Scoped Stylesheet processes your CSS at build time by appending a unique scope to your styles.
 
 - **Encapsulates Styles:** Prevents unwanted style leakage.
-- **Maintains Cascade:** Allows parent styles to cascade naturally to child elements.
+- **Avoids Manually Bunding:** Each class in a component does not need to be explicitly imported from the stylesheet.
 - **Enhances Flexibility:** Enables style reuse across components by simply passing the scope identifier.
 
 ## Development
