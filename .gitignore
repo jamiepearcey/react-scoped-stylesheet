@@ -10,3 +10,4 @@ playwright/.cache/
 .DS_Store
 playwright-report/
 test-results/
+packages/react-scoped-stylesheet/dist/global.d.ts

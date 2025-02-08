@@ -1,10 +1,10 @@
 # React Scoped Stylesheet
 
-**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React—done right. It's essentially CSS Modules, but with the added benefits of natural CSS cascade and flexible style sharing. Say goodbye to the limitations of isolated styles that don't cascade and hello to a more intuitive, maintainable styling approach in React.
+**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but with the added benefits of natural CSS cascade and flexible style sharing. 
 
 ## Overview
 
-In Vue, scoped styles just work, allowing you to encapsulate CSS without sacrificing the natural cascade of styles. React Scoped Stylesheet leverages this concept by processing your CSS at build time, adding a unique scope identifier to each stylesheet. This identifier (or class ID) is then returned for you to pass to one or more components as needed—enabling both component isolation and selective cascading.
+In Vue, scoped styles just work, allowing you to encapsulate CSS without sacrificing the natural cascade of styles. React Scoped Stylesheet leverages this concept by processing your CSS at build time, adding a unique scope identifier to each stylesheet. This identifier is then returned for you to pass to one or more components as needed—enabling both component isolation and selective cascading.
 
 > **Why?**  
 > CSS Modules isolate styles completely, eliminating the cascade that often makes CSS so powerful. With React Scoped Stylesheet, you get the best of both worlds:
