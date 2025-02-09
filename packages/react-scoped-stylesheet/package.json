@@ -23,6 +23,7 @@
     "@babel/parser": "^7.26.7",
     "@babel/traverse": "^7.26.7",
     "@babel/types": "^7.26.7",
+    "@rollup/pluginutils": "^5.1.4",
     "@types/babel-traverse": "^6.25.10",
     "babel-plugin-macros": "^3.1.0",
     "postcss": "^8.5.1",
@@ -47,6 +48,6 @@
     "test:watch": "vitest watch"
   },
   "peerDependencies": {
-     "vite": ">=5.0.0 <7.0.0"
+    "vite": ">=5.0.0 <7.0.0"
   }
 }

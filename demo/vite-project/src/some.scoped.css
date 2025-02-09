@@ -3,3 +3,8 @@
   color: red;
   background-color: blue;
 }
+
+/* This should not be applied as nested-class is in descendant component */
+.some-nested-class {
+  font-weight: bold;
+}

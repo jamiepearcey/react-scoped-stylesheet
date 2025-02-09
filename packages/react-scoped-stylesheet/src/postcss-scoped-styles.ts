@@ -11,10 +11,16 @@ export function createScopedStyles(): Plugin {
       root.walkRules(rule => {
         if (rule.selector) {
           const selectors = rule.selector.split(',');
-          const scopedAttr = `.scoped-${hash}`;
-          
+
+          const getSelector = (selector: string) => {
+            const sel = selector.trim();
+            const scopedAttr = `.scoped-${hash} `;
+            const outOfScopeSelector = `:not(${scopedAttr} .out-of-scope ${sel}) `;
+            return `${scopedAttr} ${sel}${outOfScopeSelector}`;
+          }
+
           rule.selector = selectors
-            .map(sel => `${scopedAttr} ${sel.trim()}`)
+            .map(getSelector)
             .join(',');
         }
       });

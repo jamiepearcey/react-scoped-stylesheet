@@ -1,23 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2018",
     "module": "CommonJS",
-    "moduleResolution": "node",
+    "lib": ["ES2018", "DOM"],
     "declaration": true,
-    "declarationDir": "./dist",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "./src/types",
-      "./node_modules/@types"
-    ]
+    "jsx": "react",
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

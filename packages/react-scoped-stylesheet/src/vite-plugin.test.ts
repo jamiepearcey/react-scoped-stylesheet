@@ -4,8 +4,9 @@ import type { Plugin } from 'vite';
 
 describe('viteScopedStylesPlugin', () => {
   const plugins = viteScopedStylesPlugin();
-  const prePlugin = plugins[0] as Plugin;
-  const postPlugin = plugins[1] as Plugin;
+  const jsxPlugin = plugins[0] as Plugin;
+  const cssPrePlugin = plugins[1] as Plugin;
+  const cssPostPlugin = plugins[2] as Plugin;
 
   // Mock transform context
   const mockContext = {
@@ -13,13 +14,52 @@ describe('viteScopedStylesPlugin', () => {
     warn: vi.fn()
   };
 
-  describe('pre transform', () => {
+  describe('JSX transform plugin', () => {
+    it('should transform JSX components with scoped styles', async () => {
+      const code = `
+        import { scopeClass } from './test.scoped.css';
+        function MyComponent() {
+          return <MyNestedComponent className={scopeClass}>Test</MyNestedComponent>;
+        }
+      `;
+      const id = 'test.tsx';
+      
+      if (!jsxPlugin.transform) throw new Error('Transform hook not found');
+      const result = await (jsxPlugin.transform as any).call(mockContext, code, id);
+      expect(result).toBeTruthy();
+      expect(result.code).toContain('<div className="out-of-scope"><MyNestedComponent');
+    });
+
+    it('should not transform JSX files without scoped styles', async () => {
+      const code = `
+        function MyComponent() {
+          return <div className="regular-class">Test</div>;
+        }
+      `;
+      const id = 'test.tsx';
+      
+      if (!jsxPlugin.transform) throw new Error('Transform hook not found');
+      const result = await (jsxPlugin.transform as any).call(mockContext, code, id);
+      expect(result).toBeNull();
+    });
+
+    it('should not transform non-JSX files', async () => {
+      const code = 'const x = 1;';
+      const id = 'test.js';
+      
+      if (!jsxPlugin.transform) throw new Error('Transform hook not found');
+      const result = await (jsxPlugin.transform as any).call(mockContext, code, id);
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('CSS pre transform', () => {
     it('should transform scoped CSS files', async () => {
       const code = '.test { color: red; }';
       const id = 'test.scoped.css';
       
-      if (!prePlugin.transform) throw new Error('Transform hook not found');
-      const result = await (prePlugin.transform as any).call(mockContext, code, id);
+      if (!cssPrePlugin.transform) throw new Error('Transform hook not found');
+      const result = await (cssPrePlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeTruthy();
       expect(result.code).toContain('color: red');
     });
@@ -28,8 +68,8 @@ describe('viteScopedStylesPlugin', () => {
       const code = '.test { color: red; }';
       const id = 'test.scoped.scss';
       
-      if (!prePlugin.transform) throw new Error('Transform hook not found');
-      const result = await (prePlugin.transform as any).call(mockContext, code, id);
+      if (!cssPrePlugin.transform) throw new Error('Transform hook not found');
+      const result = await (cssPrePlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeTruthy();
       expect(result.code).toContain('color: red');
     });
@@ -38,19 +78,19 @@ describe('viteScopedStylesPlugin', () => {
       const code = '.test { color: red; }';
       const id = 'test.css';
       
-      if (!prePlugin.transform) throw new Error('Transform hook not found');
-      const result = await (prePlugin.transform as any).call(mockContext, code, id);
+      if (!cssPrePlugin.transform) throw new Error('Transform hook not found');
+      const result = await (cssPrePlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeNull();
     });
   });
 
-  describe('post transform', () => {
+  describe('CSS post transform', () => {
     it('should add scope class export for scoped CSS files', async () => {
       const code = '.test { color: red; }';
       const id = 'test.scoped.css';
       
-      if (!postPlugin.transform) throw new Error('Transform hook not found');
-      const result = await (postPlugin.transform as any).call(mockContext, code, id);
+      if (!cssPostPlugin.transform) throw new Error('Transform hook not found');
+      const result = await (cssPostPlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeTruthy();
       expect(result.code).toContain('export const scopeClass =');
       expect(result.code).toContain('scoped-');
@@ -60,8 +100,8 @@ describe('viteScopedStylesPlugin', () => {
       const code = '.test { color: red; }';
       const id = 'test.scoped.scss';
       
-      if (!postPlugin.transform) throw new Error('Transform hook not found');
-      const result = await (postPlugin.transform as any).call(mockContext, code, id);
+      if (!cssPostPlugin.transform) throw new Error('Transform hook not found');
+      const result = await (cssPostPlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeTruthy();
       expect(result.code).toContain('export const scopeClass =');
       expect(result.code).toContain('scoped-');
@@ -71,8 +111,8 @@ describe('viteScopedStylesPlugin', () => {
       const code = '.test { color: red; }';
       const id = 'test.css';
       
-      if (!postPlugin.transform) throw new Error('Transform hook not found');
-      const result = await (postPlugin.transform as any).call(mockContext, code, id);
+      if (!cssPostPlugin.transform) throw new Error('Transform hook not found');
+      const result = await (cssPostPlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeNull();
     });
   });

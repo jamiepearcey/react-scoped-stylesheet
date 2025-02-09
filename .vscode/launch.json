@@ -1,27 +1,18 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to Chrome",
-            "port": 9222,
-            "request": "attach",
             "type": "chrome",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/packages/react-scoped-stylesheet/dist/next-plugin.js",
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
+            "request": "attach",
+            "name": "Debug react-scoped-stylesheet",
+            "url": "http://localhost:*",
+            "webRoot": "${workspaceFolder}/demo/vite-project",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///packages/react-scoped-stylesheet/src/*": "${workspaceFolder}/packages/react-scoped-stylesheet/src/*",
+                "/packages/react-scoped-stylesheet/src/*": "${workspaceFolder}/packages/react-scoped-stylesheet/src/*",
+                "../../packages/react-scoped-stylesheet/src/*": "${workspaceFolder}/packages/react-scoped-stylesheet/src/*"
+            }
         }
     ]
 }
