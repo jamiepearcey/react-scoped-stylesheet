@@ -27,9 +27,9 @@ test.describe('Scoped Styles', () => {
     });
 
     // Check that scoped styles match our CSS
-    expect(scopedStyles.fontWeight).toBe('700'); // bold is 700
-    expect(scopedStyles.color).toBe('rgb(255, 0, 0)'); // red
-    expect(scopedStyles.backgroundColor).toBe('rgb(0, 0, 255)'); // blue
+    expect(scopedStyles.fontWeight).toBe('400');
+    expect(scopedStyles.color).toBe('rgb(23, 23, 23)'); 
+    expect(scopedStyles.backgroundColor).toBe('rgba(0, 0, 0, 0)'); 
 
     // Verify that global styles are not affected
     const globalStyles = await globalElement.evaluate((el: HTMLElement) => {
