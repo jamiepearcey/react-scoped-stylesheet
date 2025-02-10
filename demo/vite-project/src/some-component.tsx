@@ -1,13 +1,13 @@
 import SomeNestedComponent from './some-nested-component'
-import {scopeClass} from './some.scoped.css'
+import scopeRef from './some.scoped.css'
 
 export default function SomeComponent() {
   return (
-    <div data-test-id="component-root" className={scopeClass} >
-      <div className="some-locally-scoped-class">Hello Scoped Styles</div>
+    <div data-test-id="component-root" style-scope={scopeRef}>
       <div className="global-class">Hello Scoped Styles</div>
-      <div>Some nested class</div>
-      <SomeNestedComponent />
+      <div className="some-locally-scoped-class">Some nested class</div>
+      <SomeNestedComponent/>
+      <SomeNestedComponent style-propagate/>
     </div>
   )
 }

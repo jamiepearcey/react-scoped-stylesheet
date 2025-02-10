@@ -1,10 +1,12 @@
 .some-locally-scoped-class {
-  font-weight: bold;
-  color: red;
-  background-color: blue;
+  font-weight: 700;
+  color: rgb(31, 30, 30);
+  background-color: rgb(200, 200, 204);
 }
 
-/* This should not be applied as nested-class is in descendant component */
+/* These styles will be inherited by components with style-propagate="true" */
 .some-nested-class {
-  font-weight: bold;
+  font-weight: 700;
+  color: rgb(31, 30, 30);
+  background-color: rgb(200, 200, 204);
 }

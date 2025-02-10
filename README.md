@@ -13,6 +13,9 @@
 - **Flexible Scope Sharing:**  
   Get a unique scope identifier that you can pass around, enabling multiple components to share the same scoped styles.
 
+- **Style Propagation Control:**  
+  Fine-grained control over style propagation with `style-propagate` attribute for nested components.
+
 - **Separation of Concerns:**  
   Keep your CSS in isolated stylesheets or preprocessors (SCSS, SASS) without tying them tightly to individual components.
 
@@ -43,32 +46,57 @@ pnpm add react-scoped-stylesheet
 
 ### Basic Usage
 
-Import the scopeClass from your scoped stylesheet and apply it to your component:
+Import the scope reference from your scoped stylesheet and apply it to your component:
 
 ```jsx
-import { scopeClass } from './Component.scoped.css';
+import scopeRef from './Component.scoped.css';
 
 function Component() {
-  return <div className={scopeClass}>Scoped styles that cascade!</div>;
+  return <div style-scope={scopeRef}>Scoped styles that cascade!</div>;
 }
 ```
 
 ### Advanced: Sharing Scoped Styles
 
-Import the scopeClass from your scoped stylesheet and pass the classname to components that share a scope:
+Import the scope reference from your scoped stylesheet and use it with nested components:
 
 ```jsx
-// ParentComponent.scoped.css returns a scopeClass
-import { scopeClass } from './ParentComponent.scoped.css';
+// ParentComponent.scoped.css returns a scope reference
+import scopeRef from './ParentComponent.scoped.css';
 
 function ParentComponent() {
   return (
     <>
-        <div className={scopeClass}>
-            <div>My styles cascade!</div>
-        </div>
-        <ChildComponent scope={scopeClass} />
+      <div style-scope={scopeRef}>
+        <div>My styles cascade!</div>
+        {/* NestedComponent does not inherit styles */}
+        <NestedComponent/>
+        {/* NestedComponent inherits styles from parent */}
+        <NestedComponent style-propagate/>
+      </div>
     </>
+  );
+}
+```
+
+### Style Propagation
+
+The `style-propagate` attribute allows you to control whether nested components inherit styles from their parent scope:
+
+```jsx
+import scopeRef from './styles.scoped.css';
+
+function ParentComponent() {
+  return (
+    <div style-scope={scopeRef}>
+      {/* These components will have their own isolated styles */}
+      <ChildComponent/>
+      <AnotherComponent/>
+      
+      {/* These components will inherit styles from the parent scope */}
+      <ChildComponent style-propagate/>
+      <AnotherComponent style-propagate/>
+    </div>
   );
 }
 ```
@@ -93,7 +121,6 @@ export default defineConfig({
 Configure your next.config.js to use the custom loader:
 
 ```jsx
-
 import { nextScopedStylesPlugin } from 'react-scoped-stylesheet';
 
 module.exports = {

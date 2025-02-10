@@ -119,3 +119,4 @@ export function getHashForFile(filePath: string): string {
 // RegExps for Scoped Style Sheets
 export const regexCssScopes = /\.scoped\.css$/;
 export const regexSassScopes = /\.scoped\.(scss|sass)$/;
+export const isScopedStyle = (filePath: string) => regexCssScopes.test(filePath) || regexSassScopes.test(filePath);

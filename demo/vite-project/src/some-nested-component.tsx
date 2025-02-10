@@ -1,7 +1,9 @@
+import scopeRef from './some-nested.scoped.css'
+
 export default function SomeNestedComponent() {
   return (
-    <div>
-      <div className="some-nested-class">I do not pick up the scope of parent selectors</div>
+    <div className="some-nested-class">
+      I selectively pick up the scope of parent selectors
     </div>
   )
 }

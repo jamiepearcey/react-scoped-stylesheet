@@ -27,7 +27,7 @@ describe('viteScopedStylesPlugin', () => {
       if (!jsxPlugin.transform) throw new Error('Transform hook not found');
       const result = await (jsxPlugin.transform as any).call(mockContext, code, id);
       expect(result).toBeTruthy();
-      expect(result.code).toContain('<div className="out-of-scope"><MyNestedComponent');
+      expect(result.code).toContain('<div style-out-of-scope="true"><MyNestedComponent');
     });
 
     it('should not transform JSX files without scoped styles', async () => {
