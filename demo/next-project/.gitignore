@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 /.pnp
+/target/*
+.fingerprint
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -13,6 +15,8 @@
 # testing
 /coverage
 
+/target/*
+.fingerprint
 # next.js
 /.next/
 /out/

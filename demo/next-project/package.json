@@ -10,10 +10,10 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "react-scoped-stylesheet": "workspace:*",
     "next": "15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-scoped-stylesheet": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

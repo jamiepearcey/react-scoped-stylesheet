@@ -7,7 +7,6 @@ node_modules/
 dist/
 coverage/
 playwright/.cache/
-target/
 .DS_Store
 playwright-report/
 test-results/

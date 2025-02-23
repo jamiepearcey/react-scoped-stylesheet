@@ -4,7 +4,7 @@ import type { ImageConfig, ImageConfigComplete } from '../shared/lib/image-confi
 import type { SubresourceIntegrityAlgorithm } from '../build/webpack/plugins/subresource-integrity-plugin';
 import type { WEB_VITALS } from '../shared/lib/utils';
 import type { NextParsedUrlQuery } from './request-meta';
-import type { SizeLimit } from '.';
+import type { SizeLimit } from '../types';
 import type { ExpireTime } from './lib/revalidate';
 import type { SupportedTestRunners } from '../cli/next-test';
 import type { ExperimentalPPRConfig } from './lib/experimental/ppr';
@@ -149,7 +149,7 @@ export interface WebpackConfigContext {
     /** The next.config.js merged with default values */
     config: NextConfigComplete;
     /** Default loaders used internally by Next.js */
-    defaultLoaders: {
+    defaultLoaders: any | {
         /** Default babel-loader configuration */
         babel: any;
     };

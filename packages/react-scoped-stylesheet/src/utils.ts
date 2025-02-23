@@ -67,36 +67,6 @@ export function markRemovable(r: RuleSetRule): RuleSetRule {
   return r
 }
 
-
-export type ConfigurationContext = {
-  // If the `appDir` feature is enabled
-  hasAppDir: boolean
-  // If the current rule matches a resource in the app layer
-  isAppDir?: boolean
-  supportedBrowsers: string[] | undefined
-  rootDirectory: string
-  customAppFile: RegExp | undefined
-
-  isDevelopment: boolean
-  isProduction: boolean
-
-  isServer: boolean
-  isClient: boolean
-  isEdgeRuntime: boolean
-  targetWeb: boolean
-
-  assetPrefix: string
-
-  sassOptions: any
-  productionBrowserSourceMaps: boolean
-  serverSourceMaps: boolean
-
-  transpilePackages: any
-
-  future: any
-  experimental: any
-}
-
 export type ConfigurationFn = (
   a: Configuration
 ) => Configuration

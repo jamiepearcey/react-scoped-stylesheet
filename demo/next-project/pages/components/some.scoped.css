@@ -1,0 +1,20 @@
+/* This style will apply as it is scoped to the component */
+.some-locally-scoped-class {
+  font-weight: 700;
+  color: rgb(31, 30, 30);
+  background-color: rgb(200, 200, 204);
+}
+
+/* This style will not apply as the class only exists in child components */
+.some-nested-class {
+  font-weight: 400;
+  color: rgb(30, 31, 31);
+  background-color: rgb(47, 47, 141);
+}
+
+/* This style will apply as the deep pseudoclass ensures that the style is applied to the child component */
+:deep(.target-deep-class .some-nested-class) {
+  font-weight: 700;
+  color: rgb(31, 30, 30);
+  background-color: rgb(200, 200, 204);
+}

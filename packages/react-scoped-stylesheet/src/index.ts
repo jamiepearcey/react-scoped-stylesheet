@@ -1,3 +1,4 @@
 /// <reference path="./global.d.ts" />
-export { viteScopedStylesPlugin } from './vite-plugin';
-export { nextScopedStylesPlugin } from './next-plugin';
+
+export { withViteScopedStyles } from './vite-plugin';
+export { withNextScopedStyles } from './next-plugin';

@@ -1,10 +1,3 @@
-import type { NextConfig } from "next";
-import { nextScopedStylesPlugin } from "react-scoped-stylesheet";
-
-const nextConfig: NextConfig = {
-  webpack: (config, options) => {
-    return nextScopedStylesPlugin(config);
-  },
-};
-
+import { withNextScopedStyles } from "react-scoped-stylesheet";
+const nextConfig = withNextScopedStyles({})
 export default nextConfig;

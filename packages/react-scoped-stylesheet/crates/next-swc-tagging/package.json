@@ -1,0 +1,18 @@
+{
+  "name": "next-swc-tagging",
+  "version": "0.1.0",
+  "description": "SWC plugin for tagging React components with data-component attributes",
+  "author": "Jamie Pearcey",
+  "license": "MIT",
+  "main": "dist/plugin.wasm",
+  "files": [
+    "dist/plugin.wasm"
+  ],
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "test": "cargo test"
+  },
+  "swc": {
+    "plugin": true
+  }
+}
