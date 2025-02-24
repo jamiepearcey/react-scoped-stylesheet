@@ -1,6 +1,6 @@
 # React Scoped Stylesheet
 
-**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level, and you can share styles across components by passing the scope identifier. This avoids the need to manually scope every classname to the selector block.
+**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level using CSS classes and deep selectors. This avoids the need to manually scope every classname to the selector block.
 
 ## Key Features
 
@@ -10,11 +10,11 @@
 - **Selective Cascade:**  
   Retain the natural cascade of CSS—parent styles can cascade down to children—while keeping styles scoped to your component tree.
 
+- **Deep Selector Support:**  
+  Use `:deep()` selector to explicitly control style inheritance in nested components.
+
 - **Flexible Scope Sharing:**  
   Get a unique scope identifier that you can pass around, enabling multiple components to share the same scoped styles.
-
-- **Style Propagation Control:**  
-  Fine-grained control over style propagation with `style-propagate` attribute for nested components.
 
 - **Separation of Concerns:**  
   Keep your CSS in isolated stylesheets or preprocessors (SCSS, SASS) without tying them tightly to individual components.
@@ -22,8 +22,8 @@
 - **Zero Runtime Overhead:**  
   All transformations happen at build time, so you get robust styling without impacting performance.
 
-- **Modern Tooling Integration:**  
-  Seamlessly integrates with popular build tools such as Vite and Next.js.
+- **Next.js Integration:**  
+  Seamlessly integrates with Next.js through a custom webpack configuration.
 
 ## Installation
 
@@ -42,8 +42,6 @@ pnpm add react-scoped-stylesheet
 
 ## Usage
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/vitejs-vite-pwgg39gp?file=src%2FApp.tsx)
-
 ### Basic Usage
 
 Import the scope reference from your scoped stylesheet and apply it to your component:
@@ -52,91 +50,61 @@ Import the scope reference from your scoped stylesheet and apply it to your comp
 import scopeRef from './Component.scoped.css';
 
 function Component() {
-  return <div style-scope={scopeRef}>Scoped styles that cascade!</div>;
+  return <div className={scopeRef}>Scoped styles that cascade!</div>;
 }
 ```
 
-### Advanced: Sharing Scoped Styles
+### Advanced: Using Deep Selectors
 
-Import the scope reference from your scoped stylesheet and use it with nested components:
+Use the `:deep()` selector to control style inheritance in nested components:
 
-```jsx
-// ParentComponent.scoped.css returns a scope reference
-import scopeRef from './ParentComponent.scoped.css';
+```css
+/* Component.scoped.css */
+.local-class {
+  color: blue;
+}
 
-function ParentComponent() {
-  return (
-    <>
-      <div style-scope={scopeRef}>
-        <div>My styles cascade!</div>
-        {/* NestedComponent does not inherit styles */}
-        <NestedComponent/>
-        {/* NestedComponent inherits styles from parent */}
-        <NestedComponent style-propagate/>
-      </div>
-    </>
-  );
+/* This style will apply to nested components */
+:deep(.nested-component) {
+  color: red;
 }
 ```
 
-### Style Propagation
-
-The `style-propagate` attribute allows you to control whether nested components inherit styles from their parent scope:
-
 ```jsx
-import scopeRef from './styles.scoped.css';
+import scopeRef from './Component.scoped.css';
 
-function ParentComponent() {
+function Component() {
   return (
-    <div style-scope={scopeRef}>
-      {/* These components will have their own isolated styles */}
-      <ChildComponent/>
-      <AnotherComponent/>
-      
-      {/* These components will inherit styles from the parent scope */}
-      <ChildComponent style-propagate/>
-      <AnotherComponent style-propagate/>
+    <div className={scopeRef}>
+      <div className="local-class">Locally scoped</div>
+      <NestedComponent className="nested-component" />
     </div>
   );
 }
 ```
 
-### With Vite
-
-Add the plugin to your vite.config.ts:
-
-```jsx
-import { defineConfig } from 'vite';
-import { scopedStylesPlugin as viteScopedStylesPlugin } from 'react-scoped-stylesheet';
-
-export default defineConfig({
-  plugins: [
-    viteScopedStylesPlugin()
-  ]
-});
-```
-
 ### With Next.js
 
-Configure your next.config.js to use the custom loader:
+Configure your next.config.js/ts to use the plugin:
 
-```jsx
-import { nextScopedStylesPlugin } from 'react-scoped-stylesheet';
+```typescript
+import { withNextScopedStyles } from 'react-scoped-stylesheet';
 
-module.exports = {
-  webpack: (config, options) => {
-    return nextScopedStylesPlugin(config);
-  },
-};
+const nextConfig = withNextScopedStyles({
+  // Your existing Next.js config
+});
+
+export default nextConfig;
 ```
 
 ## How It Works
 
-React Scoped Stylesheet processes your CSS at build time by appending a unique scope to your styles.
+React Scoped Stylesheet processes your CSS at build time by:
 
-- **Encapsulates Styles:** Prevents unwanted style leakage.
-- **Avoids Manually Bunding:** Each class in a component does not need to be explicitly imported from the stylesheet.
-- **Enhances Flexibility:** Enables style reuse across components by simply passing the scope identifier.
+1. Generating unique scope identifiers for each scoped stylesheet
+2. Transforming selectors to be scoped to their component
+3. Supporting `:deep()` selector for explicit style inheritance
+4. Handling style propagation through CSS class inheritance
 
 ## Development
 

@@ -24,10 +24,10 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build:swc": "cd crates/next-swc-tagging && cargo build --release",
-    "copy:swc": "mkdir -p dist/next-swc-tagging && cp crates/next-swc-tagging/dist/plugin.wasm dist/next-swc-tagging/",
-    "build": "pnpm run clean && pnpm run build:swc && pnpm run copy:swc && tsc && cp src/global.d.ts dist/",
-    "test": "vitest"
+    "build:swc": "cd crates/next-swc-tagging && rustup target add wasm32-unknown-unknown && cargo build --target wasm32-unknown-unknown --release",
+    "build": "pnpm run clean && pnpm run build:swc && mkdir -p dist/next-swc-tagging && cp target/wasm32-unknown-unknown/release/next_swc_tagging.wasm dist/next-swc-tagging/plugin.wasm && tsc && cp src/global.d.ts dist/",
+    "test": "vitest",
+    "test:e2e": "pnpm run build && cd ../../demo/next-project && pnpm install && pnpm playwright test"
   },
   "keywords": [],
   "author": "",

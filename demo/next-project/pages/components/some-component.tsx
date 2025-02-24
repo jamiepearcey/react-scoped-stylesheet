@@ -3,7 +3,7 @@ import scopeRef from './some.scoped.css'
 
 export function SomeComponent() {
   return (
-    <div className={scopeRef}>
+    <div data-test-id="component-root" className={scopeRef}>
       <div className="global-class">Hello Scoped Styles</div>
       <div className="some-locally-scoped-class">Some nested class</div>
       <SomeNestedComponent/>
