@@ -1,6 +1,8 @@
 # React Scoped Stylesheet
 
-**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level using CSS classes and deep selectors. This avoids the need to manually scope every classname to the selector block.
+**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level using CSS classes and deep selectors
+
+[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/devbox/delicate-thunder-fqny2zhttps://codesandbox.io/s/github/<YOUR-USERNAME>/<YOUR-REPO-NAME>)
 
 ## Key Features
 
@@ -95,6 +97,12 @@ const nextConfig = withNextScopedStyles({
 });
 
 export default nextConfig;
+```
+
+Add a reference to react-scope-stylehseets global type definition within a new global.d.ts file
+
+```typescript
+/// <reference types="react-scoped-stylesheet/global" />
 ```
 
 ## How It Works
