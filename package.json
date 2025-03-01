@@ -13,5 +13,11 @@
   },
   "devDependencies": {
     "turbo": "^1.13.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss-modules-scope": "3.1.1",
+      "postcss-modules-local-by-default": "4.0.4"
+    }
   }
 }

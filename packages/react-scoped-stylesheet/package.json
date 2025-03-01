@@ -24,14 +24,14 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build:swc": "cd crates/next-swc-tagging && rustup target add wasm32-unknown-unknown && cargo build --target wasm32-unknown-unknown --release",
+    "build:swc": "cd crates/next-swc-tagging && rustup target add wasm32-unknown-unknown && cargo build --target-dir ../../target --target wasm32-unknown-unknown --release",
     "build": "pnpm run clean && pnpm run build:swc && mkdir -p dist/next-swc-tagging && cp target/wasm32-unknown-unknown/release/next_swc_tagging.wasm dist/next-swc-tagging/plugin.wasm && tsc && cp src/global.d.ts dist/",
     "test": "vitest",
     "test:e2e": "pnpm run build && cd ../../demo/next-project && pnpm install && pnpm playwright test"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@rollup/pluginutils": "^5.0.2",
     "@swc/core": "^1.4.0",
@@ -59,8 +59,9 @@
   },
   "dependencies": {
     "@types/next": "^9.0.0",
-    "css-loader": "^6.10.0",
-    "postcss-loader": "^8.1.1",
+    "css-loader": "6.10.0",
+    "postcss-loader": "8.1.1",
+    "postcss-selector-parser": "6.0.15",
     "style-loader": "^3.3.4"
   }
 }

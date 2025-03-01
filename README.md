@@ -1,149 +1,131 @@
 # React Scoped Stylesheet
 
-**React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level using CSS classes and deep selectors
+Vue-style scoped CSS for React. Write a stylesheet next to a component, import the generated scope class, and attach it to the component root. Selectors are rewritten at build time, so the browser receives ordinary CSS and pays no runtime matching cost.
 
-[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/devbox/delicate-thunder-fqny2z)
+```tsx
+import scope from './Card.scoped.css'
+import './Card.scoped.css'
 
-## Key Features
+export function Card() {
+  return <article className={scope}>...</article>
+}
+```
 
-- **Vue-Like Scoped Styles:**  
-  Enjoy an intuitive, component-based styling experience inspired by Vue.
+```css
+/* Card.scoped.css */
+.title { color: #2563eb; }
 
-- **Selective Cascade:**  
-  Retain the natural cascade of CSS—parent styles can cascade down to children—while keeping styles scoped to your component tree.
+/* Reach through a nested component deliberately. */
+:deep(.third-party-button) { border-radius: 999px; }
+```
 
-- **Deep Selector Support:**  
-  Use `:deep()` selector to explicitly control style inheritance in nested components.
+## What it provides
 
-- **Flexible Scope Sharing:**  
-  Get a unique scope identifier that you can pass around, enabling multiple components to share the same scoped styles.
-
-- **Separation of Concerns:**  
-  Keep your CSS in isolated stylesheets or preprocessors (SCSS, SASS) without tying them tightly to individual components.
-
-- **Zero Runtime Overhead:**  
-  All transformations happen at build time, so you get robust styling without impacting performance.
-
-- **Next.js Integration:**  
-  Seamlessly integrates with Next.js through a custom webpack configuration.
+- **Component-local selectors.** Rules are rooted at the imported scope class.
+- **Natural CSS cascade.** Descendants can inherit ordinary parent styles.
+- **Explicit deep selectors.** `:deep(...)` moves a selector below the scope boundary.
+- **Parsed selectors.** Commas inside `:is()`, `:not()`, attributes, and other selector syntax are preserved.
+- **Nested at-rules.** Rules in media, supports, and container queries are scoped.
+- **No runtime library.** CSS transformation and scope-class generation happen during the build.
+- **Next.js integration.** A single wrapper installs the stylesheet loader and SWC component tagging plugin.
 
 ## Installation
 
-Install via npm, yarn, or pnpm:
-
-```bash
-# Using npm
-npm install react-scoped-stylesheet
-
-# Using yarn
-yarn add react-scoped-stylesheet
-
-# Using pnpm
+```sh
 pnpm add react-scoped-stylesheet
+# or: npm install react-scoped-stylesheet
 ```
 
-## Usage
+The package currently supports Next.js 14+ and Vite 5/6 through the published PostCSS/loader pieces. The supported, tested integration is Next.js:
 
-### Basic Usage
+```ts
+// next.config.ts
+import { withNextScopedStyles } from 'react-scoped-stylesheet'
 
-Import the scope reference from your scoped stylesheet and apply it to your component:
-
-```jsx
-import scopeRef from './Component.scoped.css';
-
-function Component() {
-  return <div className={scopeRef}>Scoped styles that cascade!</div>;
-}
+export default withNextScopedStyles({})
 ```
 
-### Advanced: Using Deep Selectors
+Add the package types once in the application:
 
-Use the `:deep()` selector to control style inheritance in nested components:
-
-```css
-/* Component.scoped.css */
-.local-class {
-  color: blue;
-}
-
-/* This style will apply to nested components */
-:deep(.nested-component) {
-  color: red;
-}
-```
-
-```jsx
-import scopeRef from './Component.scoped.css';
-
-function Component() {
-  return (
-    <div className={scopeRef}>
-      <div className="local-class">Locally scoped</div>
-      <NestedComponent className="nested-component" />
-    </div>
-  );
-}
-```
-
-### With Next.js
-
-Configure your next.config.js/ts to use the plugin:
-
-```typescript
-import { withNextScopedStyles } from 'react-scoped-stylesheet';
-
-const nextConfig = withNextScopedStyles({
-  // Your existing Next.js config
-});
-
-export default nextConfig;
-```
-
-Add a reference to react-scope-stylehseets global type definition within a new global.d.ts file
-
-```typescript
+```ts
+// global.d.ts
 /// <reference types="react-scoped-stylesheet/global" />
 ```
 
-## How It Works
+Name files with `.scoped.css`, `.scoped.scss`, or `.scoped.sass`. Import the stylesheet's default export and place it on the component root. A scoped stylesheet must have a root element carrying that class; the transformer cannot infer a root for a fragment or a portal.
 
-React Scoped Stylesheet processes your CSS at build time by:
+## Selector semantics
 
-1. Generating unique scope identifiers for each scoped stylesheet
-2. Transforming selectors to be scoped to their component
-3. Supporting `:deep()` selector for explicit style inheritance
-4. Handling style propagation through CSS class inheritance
+A normal selector is rooted at the component scope:
+
+```css
+.button:hover { color: white; }
+```
+
+becomes the equivalent of:
+
+```css
+.scoped-xxxxxx .button:hover { color: white; }
+```
+
+`:deep()` is an explicit escape from the normal selector boundary:
+
+```css
+:deep(.nested .button) { ... }
+```
+
+becomes:
+
+```css
+.scoped-xxxxxx .nested .button { ... }
+```
+
+The implementation uses `postcss-selector-parser`, rather than splitting selector text on commas. Keyframes and declaration-only at-rules such as `@font-face` and `@property` are intentionally left untouched.
+
+The scope identifier is derived from the stylesheet path. Keep the same project path mapping between the CSS transform and the stylesheet loader; moving a file changes its generated class and requires a rebuild.
+
+## Repository layout
+
+```text
+packages/react-scoped-stylesheet/
+  src/                 TypeScript plugin, loader, and selector transform
+  crates/next-swc-tagging/  Rust SWC plugin compiled to WASM
+
+demo/next-project/     Next.js showcase and Playwright fixtures
+```
+
+The SWC plugin adds component-root metadata used by the Next.js integration. The CSS transformation itself remains a build-time PostCSS step.
 
 ## Development
 
-To set up the project locally for development:
-
-```bash
-# Install dependencies
+```sh
 pnpm install
-
-# Run tests
-pnpm test
-
-# Build the package
-pnpm build
+pnpm --filter react-scoped-stylesheet test -- --run
+pnpm --filter react-scoped-stylesheet exec tsc --noEmit
+pnpm --filter react-scoped-stylesheet build
+pnpm --filter react-scoped-stylesheet test:e2e
 ```
+
+Run the demo locally:
+
+```sh
+pnpm --dir demo/next-project dev
+```
+
+The demo is available at `http://localhost:3000` and shows local styles, nested components, and a `:deep()` override.
+
+The package build requires Rust and the `wasm32-unknown-unknown` target. It writes the SWC artifact to the package's `target/` directory so the build remains correct when `CARGO_TARGET_DIR` is set elsewhere.
+
+## Current boundaries
+
+This package scopes CSS; it does not provide runtime style isolation or Shadow DOM. Anything that can inspect or modify the page's CSS can inspect or override the generated selectors. Portals render outside the component root and need their own scope class or an explicit global stylesheet. Fragment roots need a wrapper element if they use scoped CSS.
+
+The package does not currently promise automatic support for every React rendering pattern, including dynamically generated root elements, third-party components that discard `className`, or CSS features that a particular PostCSS parser cannot represent. Add a fixture before relying on a new selector or framework integration.
 
 ## Contributing
 
-Contributions are always welcome! If you encounter any issues or have ideas for improvements:
-
-- **Report Issues:** Open a GitHub issue detailing the problem.
-- **Submit Pull Requests:** Fork the repository, make your changes, and open a pull request.
-
-Your contributions help make React Scoped Stylesheet even better!
+Keep selector behavior covered by focused PostCSS fixtures and keep framework behavior covered by the demo/e2e suite. Changes to the generated class contract, `:deep()` semantics, or the SWC plugin should include a migration note in the pull request and an updated example.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## About
-
-React Scoped Stylesheet was built to provide a robust and flexible styling solution for React developers. Inspired by the effortless experience of Vue's scoped styles and addressing the shortcomings of traditional CSS Modules, this tool allows you to write maintainable, scalable CSS that feels natural.
-
-Explore the repository, open issues, and join the community to help drive the project forward. Happy coding!
+MIT. See [LICENSE](LICENSE).

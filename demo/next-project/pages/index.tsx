@@ -1,12 +1,15 @@
-
-import {SomeComponent} from "./components/some-component";
+import { SomeComponent } from './components/some-component'
+import scopeRef from './home.scoped.css'
 
 export default function Home() {
-  return (
-    <div>
-      <h1>Welcome to Next.js</h1>
-      <p>With scoped styles!</p>
-      <SomeComponent />
-    </div>
-  );
+  return <main className={`${scopeRef} page-shell`}>
+    <nav className="topbar"><a className="brand" href="#top"><span className="mark">RS</span><span>React Scoped Stylesheet</span></a><div className="nav-links"><a href="#how">How it works</a><a href="#example">Example</a><a href="#install">Install</a><a className="github-link" href="https://github.com/jamiepearcey/react-scoped-stylesheet">GitHub ↗</a></div></nav>
+    <section className="hero" id="top"><div className="eyebrow">Open source · MIT licensed · React</div><h1>Scoped CSS.<br /><em>Without the ceremony.</em></h1><p className="lede">Vue-like component styles for React. Keep the cascade you like, contain the leaks you do not.</p><div className="hero-actions"><a className="primary-button" href="#install">Get started <span>↓</span></a><a className="text-button" href="https://github.com/jamiepearcey/react-scoped-stylesheet">View source ↗</a></div></section>
+    <section className="proof-strip"><div><strong>0</strong><span>runtime dependencies</span></div><div><strong>1</strong><span>className on the root</span></div><div><strong>∞</strong><span>ordinary CSS selectors</span></div></section>
+    <section className="example-section" id="example"><div className="section-intro"><span className="section-label">The idea</span><h2>Write CSS beside<br />your component.</h2><p>Import the generated scope class, attach it to the root, and keep writing CSS you already know.</p></div><div className="code-card"><div className="code-head"><span>Card.tsx</span><span className="dot-group"><i /><i /><i /></span></div><pre><code><b>import</b> scope <b>from</b> <i>&apos;./Card.scoped.css&apos;</i>{'\n\n'}<b>export function</b> Card() {'{'}{'\n'}  <b>return</b> ({'\n'}    &lt;article className={'{'}scope{'}'}&gt;{'\n'}      ...{'\n'}    &lt;/article&gt;{'\n'}  ){'}'}{'\n'}{' }'}</code></pre></div></section>
+    <section className="demo-card" id="how"><div className="card-heading"><div><span className="section-label">Live example</span><h2>Parent and child</h2></div><span className="file-label">some.scoped.css</span></div><SomeComponent /></section>
+    <section className="feature-grid"><article><span className="feature-icon">⌘</span><h3>Local by default</h3><p>Scope styles to a component tree without renaming every class.</p></article><article><span className="feature-icon">↳</span><h3>Deep by choice</h3><p>Use <code>:deep()</code> when a parent should reach a nested component.</p></article><article><span className="feature-icon">⚡</span><h3>Build-time fast</h3><p>PostCSS does the work before the browser sees your stylesheet.</p></article></section>
+    <section className="install-section" id="install"><div><span className="section-label">Start here</span><h2>Install once.<br />Style normally.</h2><p>Works with Next.js and the existing CSS toolchain.</p></div><div className="install-card"><code><span className="prompt">$</span> pnpm add react-scoped-stylesheet</code><code><span className="prompt">$</span> pnpm dev</code></div></section>
+    <footer><span>React Scoped Stylesheet</span><span>·</span><span>MIT License</span><span>·</span><a href="https://github.com/jamiepearcey/react-scoped-stylesheet">GitHub ↗</a></footer>
+  </main>
 }

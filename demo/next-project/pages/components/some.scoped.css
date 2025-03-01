@@ -1,20 +1,7 @@
-/* This style will apply as it is scoped to the component */
-.some-locally-scoped-class {
-  font-weight: 700;
-  color: rgb(31, 30, 30);
-  background-color: rgb(200, 200, 204);
-}
+.component-panel { position: relative; }
+/* This parent rule is local to the demo component. */
+.component-panel h3 { letter-spacing: -.01em; }
+/* This reaches into the nested component only where the parent opts in. */
+:deep(.deep-sample .some-nested-class) { color: #f3f6ff; background: transparent; font-weight: 700; }
 
-/* This style will not apply as the class only exists in child components */
-.some-nested-class {
-  font-weight: 400;
-  color: rgb(30, 31, 31);
-  background-color: rgb(47, 47, 141);
-}
-
-/* This style will apply as the deep pseudoclass ensures that the style is applied to the child component */
-:deep(.target-deep-class .some-nested-class) {
-  font-weight: 700;
-  color: rgb(31, 30, 30);
-  background-color: rgb(200, 200, 204);
-}
+.sample-label { display: block; margin-bottom: 8px; color: #727da9; font: 10px ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; }

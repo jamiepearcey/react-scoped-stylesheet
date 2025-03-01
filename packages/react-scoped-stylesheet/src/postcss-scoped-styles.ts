@@ -1,5 +1,41 @@
 import { type Plugin } from 'postcss';
+import selectorParser from 'postcss-selector-parser';
 import { getHashForFile } from './utils';
+
+const NON_SELECTOR_AT_RULES = new Set(['font-face', 'keyframes', '-webkit-keyframes', 'property', 'counter-style']);
+
+function hasNonSelectorAncestor(rule: any): boolean {
+  let parent = rule.parent;
+  while (parent) {
+    if (parent.type === 'atrule' && NON_SELECTOR_AT_RULES.has(parent.name.toLowerCase())) return true;
+    parent = parent.parent;
+  }
+  return false;
+}
+
+function scopeSelectorList(source: string, scopeClass: string): string {
+  const processor = selectorParser(selectors => {
+    selectors.each(selector => {
+      const raw = String(selector).trim();
+      if (!raw) return;
+      const deep = raw.match(/:deep\((.*)\)$/s);
+      if (deep) {
+        selector.removeAll();
+        selector.append(selectorParser.className({ value: scopeClass }));
+        selector.append(selectorParser.combinator({ value: ' ' }));
+        const deepSelector = selectorParser().astSync(deep[1]).nodes[0];
+        deepSelector.nodes.forEach(node => selector.append(node));
+      } else {
+        while (selector.first?.type === 'combinator' && selector.first.value.trim() === '') {
+          selector.first.remove();
+        }
+        selector.prepend(selectorParser.combinator({ value: ' ' }));
+        selector.prepend(selectorParser.className({ value: scopeClass }));
+      }
+    });
+  });
+  return processor.processSync(source).replace(new RegExp(`\\.${scopeClass} +`, 'g'), `.${scopeClass} `);
+}
 
 export function createScopedStyles(): Plugin {
   return {
@@ -8,33 +44,11 @@ export function createScopedStyles(): Plugin {
       const filePath = root.source?.input.file;
       if (!filePath) return;
 
-      const hash = getHashForFile(filePath);
-      const scopeClass = `scoped-${hash}`;
+      const scopeClass = `scoped-${getHashForFile(filePath)}`;
 
       root.walkRules(rule => {
-        if (rule.parent?.type === 'atrule') return;
-
-        const getSelector = (selector: string) => {
-          const sel = selector.trim();
-          const scopedAttr = `.${scopeClass}`;
-
-          // Match :deep(<selector>) or :deep(selector)
-          const deepMatch = sel.match(/:deep\((.*?)\)/);
-          if (deepMatch) {
-            const innerSelector = deepMatch[1].trim();
-            return `${scopedAttr} ${innerSelector}`;
-          }
-
-          // Match other pseudo-classes like :hover, :active, etc.
-          // const pseudoClassRegex = /:(hover|active|focus|visited|disabled|checked|first-child|last-child|nth-child|not|is|where|has|root|empty|target|first|last|only-child|link|lang|dir|scope|current|past|future|playing|paused|read-only|read-write|placeholder-shown|default|valid|invalid|in-range|out-of-range|required|optional|blank|user-invalid|enabled|indeterminate|any-link|local-link|nth-last-child|nth-of-type|nth-last-of-type|first-of-type|last-of-type|only-of-type|host|host-context|fullscreen|modal|picture-in-picture|autofill|defined|before|after|selection|marker|backdrop|placeholder|file-selector-button|first-letter|first-line|spelling-error|grammar-error|cue|cue-region|part|slotted|view-transition|view-transition-group|view-transition-image-pair|view-transition-old|view-transition-new)/g;
-          
-          const outOfScopeNestedSelector = `:not(${scopedAttr} [data-component], ${scopedAttr} [data-component] ${sel})`;
-          const excludeNestedSelector = `${scopedAttr} ${sel}${outOfScopeNestedSelector}`;
-          return `${excludeNestedSelector}`;
-        }
- 
-        const selectors = rule.selector.split(',').map(s => getSelector(s));
-        rule.selector = selectors.join(',');
+        if (hasNonSelectorAncestor(rule)) return;
+        rule.selector = scopeSelectorList(rule.selector, scopeClass);
       });
     }
   };
