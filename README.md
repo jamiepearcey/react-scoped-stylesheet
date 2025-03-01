@@ -2,7 +2,7 @@
 
 **React Scoped Stylesheet** brings the power and simplicity of Vue's scoped styles to React. It's essentially CSS Modules, but where styles are naturally scoped to the component level using CSS classes and deep selectors
 
-[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/devbox/delicate-thunder-fqny2zhttps://codesandbox.io/s/github/<YOUR-USERNAME>/<YOUR-REPO-NAME>)
+[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/devbox/delicate-thunder-fqny2z)
 
 ## Key Features
 
